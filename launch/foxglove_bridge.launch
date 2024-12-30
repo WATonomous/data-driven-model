@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Launch Foxglove Bridge -->
+    <node name="foxglove_bridge" pkg="foxglove_bridge" type="foxglove_bridge" output="screen">
+        <param name="port" value="8765"/>
+        <param name="address" value="0.0.0.0"/>
+        <param name="tls" value="false"/>
+        <param name="topic_whitelist" type="string" value="['/car/.*', '/tf', '/tf_static']"/>
+    </node>
+</launch> 

@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  car_mpc:
+    build: .
+    container_name: car_mpc_controller
+    # Using bridge network instead of host for better control
+    ports:
+      - "8765:8765"  # Foxglove Bridge port
+      - "11311:11311"  # ROS master port
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ROS_MASTER_URI=http://localhost:11311
+      - ROS_HOSTNAME=car_mpc_controller
+      - ROS_IP=172.17.0.1  # Docker bridge network default IP
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ${HOME}/.Xauthority:/root/.Xauthority:rw
+    restart: unless-stopped 

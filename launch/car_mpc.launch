@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Launch the car state publisher -->
+    <node name="car_state_publisher" pkg="car_mpc_control" type="car_state_publisher.py" output="screen">
+    </node>
+
+    <!-- Launch the circular trajectory generator -->
+    <node name="circular_trajectory" pkg="car_mpc_control" type="circular_trajectory.py" output="screen">
+    </node>
+
+    <!-- Launch Foxglove Bridge -->
+    <include file="$(find car_mpc_control)/launch/foxglove_bridge.launch" />
+
+    <!-- Static transform for visualization -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="map_to_odom" 
+          args="0 0 0 0 0 0 map odom" />
+</launch> 
