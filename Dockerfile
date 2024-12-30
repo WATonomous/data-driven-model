@@ -7,6 +7,12 @@ RUN apt-get update && apt-get install -y \
     python3-catkin-pkg \
     ros-noetic-tf2-ros \
     ros-noetic-foxglove-bridge \
+    ros-noetic-robot-state-publisher \
+    ros-noetic-joint-state-publisher \
+    ros-noetic-xacro \
+    git \
+    build-essential \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Create catkin workspace

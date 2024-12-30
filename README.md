@@ -29,3 +29,9 @@
 ```bash
 ./run.sh down
 ``` 
+
+If there is an error on build, prune the docker system.
+
+```bash
+docker system prune -f
+```

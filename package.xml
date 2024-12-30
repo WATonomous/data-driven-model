@@ -16,6 +16,8 @@
   <depend>tf2_ros</depend>
   <depend>tf</depend>
   <depend>foxglove_bridge</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>joint_state_publisher</depend>
 
   <exec_depend>python3-numpy</exec_depend>
   <exec_depend>python3-scipy</exec_depend>

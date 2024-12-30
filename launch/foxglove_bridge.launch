@@ -5,6 +5,10 @@
         <param name="port" value="8765"/>
         <param name="address" value="0.0.0.0"/>
         <param name="tls" value="false"/>
-        <param name="topic_whitelist" type="string" value="['/car/.*', '/tf', '/tf_static']"/>
+        <param name="topic_whitelist" type="string" value="['/car/.*', '/tf', '/tf_static', '/robot_description']"/>
+        <param name="client_timeout_sec" value="10.0"/>
+        <param name="max_qos_depth" value="10"/>
+        <param name="send_buffer_limit" value="10000000"/>
+        <param name="num_threads" value="4"/>
     </node>
 </launch> 

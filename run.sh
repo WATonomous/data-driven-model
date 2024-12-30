@@ -4,7 +4,7 @@
 show_usage() {
     echo "Usage: $0 [build|up|down|logs]"
     echo "  build  - Build the Docker image"
-    echo "  up     - Start the container"
+    echo "  up     - Start the container and show logs"
     echo "  down   - Stop the container"
     echo "  logs   - Show container logs"
 }
@@ -23,8 +23,7 @@ case "$1" in
         ;;
     up)
         echo "Starting container..."
-        docker-compose up -d
-        echo "Container started. Connect Foxglove Studio to ws://localhost:8765"
+        docker-compose up
         ;;
     down)
         echo "Stopping container..."

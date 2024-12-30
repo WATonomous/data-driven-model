@@ -12,8 +12,10 @@ services:
       - DISPLAY=${DISPLAY}
       - ROS_MASTER_URI=http://localhost:11311
       - ROS_HOSTNAME=car_mpc_controller
-      - ROS_IP=172.17.0.1  # Docker bridge network default IP
+      - PYTHONUNBUFFERED=1  # Force Python to show logs immediately
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ${HOME}/.Xauthority:/root/.Xauthority:rw
+    tty: true  # Keep STDOUT open
+    stdin_open: true  # Keep STDIN open
     restart: unless-stopped 

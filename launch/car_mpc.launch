@@ -1,17 +1,44 @@
 <?xml version="1.0"?>
 <launch>
+    <!-- Load the URDF model to parameter server -->
+    <param name="robot_description" command="$(find xacro)/xacro '$(find car_mpc_control)/urdf/car.urdf'" />
+
+    <!-- Launch joint state publisher -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="rate" value="50"/>
+        <param name="use_gui" value="false"/>
+    </node>
+
+    <!-- Launch robot state publisher -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+        <param name="publish_frequency" value="50.0"/>
+        <param name="use_tf_static" value="true"/>
+        <param name="ignore_timestamp" value="true"/>
+        <remap from="/joint_states" to="/joint_states"/>
+    </node>
+
     <!-- Launch the car state publisher -->
     <node name="car_state_publisher" pkg="car_mpc_control" type="car_state_publisher.py" output="screen">
+    </node>
+
+    <!-- Launch the MPC controller -->
+    <node name="car_mpc_controller" pkg="car_mpc_control" type="car_mpc_controller.py" output="screen">
     </node>
 
     <!-- Launch the circular trajectory generator -->
     <node name="circular_trajectory" pkg="car_mpc_control" type="circular_trajectory.py" output="screen">
     </node>
 
-    <!-- Launch Foxglove Bridge -->
+    <!-- Launch Foxglove Bridge with TF topics -->
     <include file="$(find car_mpc_control)/launch/foxglove_bridge.launch" />
 
-    <!-- Static transform for visualization -->
-    <node pkg="tf2_ros" type="static_transform_publisher" name="map_to_odom" 
-          args="0 0 0 0 0 0 map odom" />
+    <!-- Static transforms for the transform tree -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="world_to_odom" 
+          args="0 0 0 0 0 0 world odom" output="screen" />
+          
+    <node pkg="tf2_ros" type="static_transform_publisher" name="odom_to_map" 
+          args="0 0 0 0 0 0 odom map" output="screen" />
+
+    <!-- Debug TF frames -->
+    <node pkg="tf2_ros" type="tf2_monitor" name="tf_monitor" output="screen"/>
 </launch> 

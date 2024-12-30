@@ -25,7 +25,8 @@ include_directories(
 )
 
 catkin_install_python(PROGRAMS
-  src/car_mpc.py
-  src/trajectory_generator.py
+  src/car_state_publisher.py
+  src/car_mpc_controller.py
+  src/circular_trajectory.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 ) 
