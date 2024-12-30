@@ -1,99 +1,31 @@
-# Car MPC Control
+# Data Driven Model
 
-A ROS package implementing Model Predictive Control (MPC) for autonomous vehicle trajectory tracking. This is a simplified version adapted from a data-driven MPC approach, using a basic bicycle model for vehicle dynamics.
+## Quick Start
 
-## Features
-
-- Model Predictive Control using CasADi optimizer
-- Bicycle model dynamics
-- Circular trajectory generation
-- RViz visualization
-- ROS integration
-
-## Prerequisites
-
-- ROS (tested on Melodic/Noetic)
-- Python 3
-- CasADi
-- NumPy
-- SciPy
-
-## Installation
-
-1. Create a catkin workspace (if you don't have one):
+1. Build and start the Docker container:
 ```bash
-mkdir -p ~/catkin_ws/src
-cd ~/catkin_ws
-catkin init
+./run.sh build
+./run.sh up
 ```
 
-2. Clone this repository into the src directory:
+2. Connect Foxglove Studio:
+- Open Foxglove Studio
+- Click "Open Connection"
+- Select "WebSocket"
+- Enter URL: `ws://localhost:8765`
+- Click "Open"
+
+3. Add visualization panels in Foxglove:
+- Click "+" to add a new panel
+- Add "3D" panel to see the car moving
+- Add "Plot" panel to see velocities
+- Select topics:
+  - `/car/odom` for car position
+  - `/car/reference_path` for the circular path
+  - `/car/cmd_vel` for velocity commands
+
+## Stopping the Simulation
+
 ```bash
-cd ~/catkin_ws/src
-git clone <repository_url> car_mpc_control
-```
-
-3. Install Python dependencies:
-```bash
-cd car_mpc_control
-pip3 install -r requirements.txt
-```
-
-4. Build the package:
-```bash
-cd ~/catkin_ws
-catkin build
-source devel/setup.bash
-```
-
-## Usage
-
-1. Launch the MPC controller and trajectory generator:
-```bash
-roslaunch car_mpc_control car_mpc.launch
-```
-
-This will start:
-- The MPC controller node
-- The trajectory generator node (generating a circular reference path)
-- RViz for visualization
-
-## Node Information
-
-### MPC Controller (`car_mpc.py`)
-- Subscribes to:
-  - `/odom` (nav_msgs/Odometry): Current vehicle state
-  - `/reference` (std_msgs/Float64MultiArray): Reference trajectory points
-- Publishes to:
-  - `/cmd_vel` (geometry_msgs/Twist): Control commands
-
-### Trajectory Generator (`trajectory_generator.py`)
-- Publishes to:
-  - `/reference` (std_msgs/Float64MultiArray): Reference trajectory points
-  - `/reference_path` (nav_msgs/Path): Visualization of reference path
-
-## Parameters
-
-### MPC Parameters (in `car_mpc.py`)
-- Time step (dt): 0.1s
-- Prediction horizon (N): 10 steps
-- Maximum velocity: 20.0 m/s
-- Maximum steering angle: π/4 rad
-- Maximum acceleration: 3.0 m/s²
-
-### Trajectory Parameters (in `trajectory_generator.py`)
-- Circle radius: 10.0m
-- Reference velocity: 5.0 m/s
-- Update rate: 10 Hz
-
-## Customization
-
-To modify the reference trajectory:
-1. Edit the `TrajectoryGenerator` class in `trajectory_generator.py`
-2. Implement your own trajectory generation method
-3. Update the parameters as needed
-
-To tune the MPC controller:
-1. Adjust the weights in the `CarMPC` class (`self.Q` and `self.R`)
-2. Modify the constraints (`v_max`, `delta_max`, `a_max`)
-3. Change the prediction horizon or time step if needed 
+./run.sh down
+``` 
