@@ -1,6 +1,18 @@
 # Data Driven Model
 
-## Quick Start
+## Training the model
+
+- Setup the db with the Drone Simuation Setup 
+  - instructions: [https://github.com/TUM-AAS/neural-mpc](https://github.com/TUM-AAS/neural-mpc)
+- Setup ml-casadi repository
+- Setup acados on Linux locally
+- set `export PYTHONPATH="/home/{username}/neural-mpc/ml-casadi:/home/{username}/neural-mpc/ros_dd_mpc"`
+- set `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/acados/lib && export ACADOS_SOURCE_DIR=~/acados`
+
+- python src/model_fitting/train.py --csv data/simplified_sim_dataset/train/dataset_001.csv
+- python src/experiments/eval.py
+
+## ROS Environment (WIP)
 
 1. Build and start the Docker container:
 ```bash

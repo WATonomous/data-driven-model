@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   car_mpc:
@@ -18,4 +18,9 @@ services:
       - ${HOME}/.Xauthority:/root/.Xauthority:rw
     tty: true  # Keep STDOUT open
     stdin_open: true  # Keep STDIN open
-    restart: unless-stopped 
+    restart: unless-stopped
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./src
+          target: /app/src
